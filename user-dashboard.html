@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="G-Fitness user dashboard.">
+    <meta name="author" content="G-Fitness">
+    <title>User Dashboard - G-Fitness</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root { color-scheme: dark; }
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #0d1117;
+            color: #e6edf3;
+        }
+        .dashboard-header {
+            background: #111827;
+            border-bottom: 1px solid #1f2937;
+        }
+        .card-dark {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 1rem;
+        }
+        .table-dark th, .table-dark td {
+            background: #0f172a;
+            border-color: #1f2937;
+            color: #e6edf3;
+        }
+        .badge-plan {
+            background: rgba(255, 107, 53, 0.2);
+            color: #ff6b35;
+            border: 1px solid rgba(255, 107, 53, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <header class="dashboard-header py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-lightning-charge-fill text-warning"></i>
+                <span class="fw-bold">G-FITNESS</span>
+            </div>
+            <button class="btn btn-outline-warning btn-sm" id="logoutBtn">
+                <i class="bi bi-box-arrow-right me-2"></i>Logout
+            </button>
+        </div>
+    </header>
+
+    <main class="container py-4">
+        <section class="card-dark p-4 mb-4" aria-labelledby="welcomeTitle">
+            <h1 class="h4 fw-bold" id="welcomeTitle">Welcome back</h1>
+            <p class="text-white-50 mb-0">Your journey continues. Keep pushing forward!</p>
+        </section>
+
+        <section class="row g-4 mb-4">
+            <div class="col-lg-6">
+                <div class="card-dark p-4 h-100">
+                    <h2 class="h5 fw-bold">Membership</h2>
+                    <p class="text-white-50 mb-2">Selected plan</p>
+                    <span class="badge badge-plan" id="membershipBadge">Basic</span>
+                    <div class="mt-3">
+                        <a id="upgradeBtn" class="btn btn-sm btn-outline-warning" href="membership.html">Upgrade to Premium</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card-dark p-4 h-100">
+                    <h2 class="h5 fw-bold">Quick Stats</h2>
+                    <ul class="list-unstyled mb-0 text-white-50">
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Goal progress: 62%</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Workouts this week: 4</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Next session: Friday 6:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="card-dark p-4" aria-labelledby="historyTitle">
+            <h2 class="h5 fw-bold" id="historyTitle">Product Purchase History</h2>
+            <div class="table-responsive mt-3">
+                <table class="table table-dark table-striped align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Order ID</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#GF-1024</td>
+                            <td>Premium Protein Pack</td>
+                            <td>Feb 10, 2026</td>
+                            <td>$59.00</td>
+                            <td><span class="badge bg-success">Delivered</span></td>
+                        </tr>
+                        <tr>
+                            <td>#GF-1011</td>
+                            <td>Resistance Bands Set</td>
+                            <td>Jan 22, 2026</td>
+                            <td>$25.00</td>
+                            <td><span class="badge bg-success">Delivered</span></td>
+                        </tr>
+                        <tr>
+                            <td>#GF-1004</td>
+                            <td>Performance Shaker</td>
+                            <td>Jan 08, 2026</td>
+                            <td>$15.00</td>
+                            <td><span class="badge bg-warning text-dark">Processing</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userName = localStorage.getItem('userName') || 'Member';
+            const userMembership = localStorage.getItem('userMembership') || 'Free';
+            
+            const welcome = document.getElementById('welcomeTitle');
+            const badge = document.getElementById('membershipBadge');
+            const upgradeBtn = document.getElementById('upgradeBtn');
+            
+            welcome.textContent = `Welcome back, ${userName}`;
+            badge.textContent = userMembership;
+            
+            const currentPlan = userMembership.toLowerCase();
+            if (currentPlan === 'premium' || currentPlan === 'elite') {
+                upgradeBtn.textContent = 'Manage Plan';
+                upgradeBtn.classList.remove('btn-outline-warning');
+                upgradeBtn.classList.add('btn-outline-success');
+            }
+        });
+    </script>
+</body>
+</html>
